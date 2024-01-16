@@ -14,6 +14,11 @@ public class ConversionHelperTests {
 	}
 	
 	@Test
+	void to12Test0() {
+		assertEquals(-10, ConversionHelper.to12((byte)-10));
+	}
+	
+	@Test
 	void to12Test1() {
 		assertEquals(-10, ConversionHelper.to12((byte)-12));
 	}

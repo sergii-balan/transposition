@@ -3,20 +3,21 @@ package com.sb.transposition.utils;
 import lombok.NonNull;
 
 public class ConversionHelper {
-	private static final byte D_BASE = 12;
+	private static final byte D_B12 = 12;
+	private static final byte D_B10 = 10;
 
 	public static byte to12(@NonNull byte[] b10) {
 		if (b10[0] >= 0) {
-			return (byte) (b10[0] * D_BASE + b10[1]);
+			return (byte) (b10[0] * D_B12 + b10[1]);
 		}
 		
-		byte b = (byte) ((b10[0] + 1) * D_BASE);
-		byte r = (byte) (b10[1] - D_BASE - 1);
+		byte b = (byte) ((b10[0] + 1) * D_B12);
+		byte r = (byte) (b10[1] - D_B12 - 1);
 		return (byte) (b + r);
 	}
 	
 	public static byte to12(byte b10) {
-		return (byte) ( -D_BASE < b10 && b10 < D_BASE ? b10 : b10 / D_BASE * 10 + b10 % D_BASE);
+		return (byte) ( -D_B10 < b10 && b10 < D_B10 ? b10 : b10 / D_B12 * D_B10 + b10 % D_B12);
 	}
 	
 	public static byte[] to10(byte b12) {
@@ -29,8 +30,8 @@ public class ConversionHelper {
 	
 	private static byte[] positiveTo10(byte b12) {
 		byte[] b10 = new byte[2];
-		b10[0] = (byte) (b12 / D_BASE);
-		b10[1] = (byte) (b12 % D_BASE);
+		b10[0] = (byte) (b12 / D_B12);
+		b10[1] = (byte) (b12 % D_B12);
 		
 		if (b10[1] == 0) {
 			b10[0] -= 1;
@@ -42,8 +43,8 @@ public class ConversionHelper {
 	
 	private static byte[] negativeTo10(byte b12) {
 		byte[] b10 = new byte[2];
-		b10[0] = (byte) (b12 / D_BASE - 1);
-		b10[1] = (byte) (b12 % D_BASE + D_BASE + 1);
+		b10[0] = (byte) (b12 / D_B12 - 1);
+		b10[1] = (byte) (b12 % D_B12 + D_B12 + 1);
 		return b10;
 	}
 }
