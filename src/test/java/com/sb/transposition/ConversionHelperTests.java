@@ -15,11 +15,26 @@ public class ConversionHelperTests {
 	
 	@Test
 	void to12Test1() {
-		assertEquals(13, ConversionHelper.to12((byte)35));
+		assertEquals(-10, ConversionHelper.to12((byte)-12));
 	}
 	
 	@Test
 	void to12Test2() {
+		assertEquals(10, ConversionHelper.to12((byte)12));
+	}
+	
+	@Test
+	void to12Test3() {
+		assertEquals(13, ConversionHelper.to12((byte)15));
+	}
+	
+	@Test
+	void to12Test4() {
+		assertEquals(31, ConversionHelper.to12((byte)35));
+	}
+	
+	@Test
+	void to12Test5() {
 		assertEquals(41, ConversionHelper.to12(new byte[] {3, 5}));
 	}
 	

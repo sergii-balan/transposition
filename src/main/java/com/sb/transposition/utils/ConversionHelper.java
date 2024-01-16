@@ -16,7 +16,7 @@ public class ConversionHelper {
 	}
 	
 	public static byte to12(byte b10) {
-		return (byte) (b10 < D_BASE ? b10 : b10 / D_BASE + b10 % D_BASE);
+		return (byte) ( -D_BASE < b10 && b10 < D_BASE ? b10 : b10 / D_BASE * 10 + b10 % D_BASE);
 	}
 	
 	public static byte[] to10(byte b12) {
