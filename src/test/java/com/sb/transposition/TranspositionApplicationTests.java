@@ -16,6 +16,8 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(locations = "classpath:application.properties")
 class TranspositionApplicationTests {
 	
+	private static final String EXPN_TEMPLATE = "Note is 'Note(octave=%d, number=%d)'.";
+	
 	@Autowired
 	private Transposition transposition;
 
@@ -46,7 +48,8 @@ class TranspositionApplicationTests {
 			transposition.process("[[-7,2]]", "-100");
 	    });
 		
-		assertTrue("Octave number is '-7'.".equals(exception.getMessage()));
+		String expected = EXPN_TEMPLATE.formatted(-7, 2);
+		assertTrue(expected.equals(exception.getMessage()));
 	}
 	
 	@Test
@@ -55,7 +58,8 @@ class TranspositionApplicationTests {
 			transposition.process("[[-3,10]]", "-1");
 	    });
 		
-		assertTrue("Value is '[-3,9]'.".equals(exception.getMessage()));
+		String expected = EXPN_TEMPLATE.formatted(-3, 9);
+		assertTrue(expected.equals(exception.getMessage()));
 	}
 	
 	@Test
@@ -64,6 +68,7 @@ class TranspositionApplicationTests {
 			transposition.process("[[5,1]]", "1");
 	    });
 		
-		assertTrue("Value is '[5,2]'.".equals(exception.getMessage()));
+		String expected = EXPN_TEMPLATE.formatted(5, 2);
+		assertTrue(expected.equals(exception.getMessage()));
 	}
 }

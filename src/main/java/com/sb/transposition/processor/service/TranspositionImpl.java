@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TranspositionImpl implements Transposition {
 	
+	private static final String EXPN_TEMPLATE = "Note is 'Note(octave=%d, number=%d)'.";
+	
 	private static final byte[][] EMPTY_BARR = new byte[0][0];
 	private static final int ARG_MIN_LEN = 7; //[[1,2]]
 	private static final String BR_S = "[";
@@ -30,6 +32,7 @@ public class TranspositionImpl implements Transposition {
 
 	@Override
 	public byte[][] process(@NonNull byte[][] data, byte transposition) throws Exception {
+		log.info("processing...");
 		for (int i = 0; i < data.length; i++) {
 			checkValue(data[i]);
 			data[i] = add(data[i], transposition);
@@ -62,12 +65,12 @@ public class TranspositionImpl implements Transposition {
 	
 	private static void checkValue(byte[] value) throws Exception {
 		if (L_OCTAVE[0] > value[0] || H_OCTAVE[0] < value[0]) {
-			throw new Exception(String.format("Octave number is '%d'.", value[0]));
+			throw new Exception(EXPN_TEMPLATE.formatted(value[0], value[1]));
 		}
 		
 		if ((L_OCTAVE[0] == value[0] && L_OCTAVE[1] > value[1]) 
 				|| (H_OCTAVE[0] == value[0] && H_OCTAVE[1] < value[1])) {
-			throw new Exception(String.format("Value is '[%d,%d]'.", value[0], value[1]));
+			throw new Exception(EXPN_TEMPLATE.formatted(value[0], value[1]));
 		}
 		
 		if (value[1] < 1 || value[1] > D_BASE) {
