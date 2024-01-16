@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-@SpringBootTest(args = {"0", "[[0,1],[0,1]]"})
+@SpringBootTest(args = {"0", "[[0,1]]"})
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application.properties")
 class TranspositionApplicationTests {
@@ -43,9 +43,27 @@ class TranspositionApplicationTests {
 	@Test
 	void transpositionProcess4() throws Exception {
 		Exception exception = assertThrows(Exception.class, () -> {
-			transposition.process("[[1,2]]", "-100");
+			transposition.process("[[-7,2]]", "-100");
 	    });
 		
 		assertTrue("Octave number is '-7'.".equals(exception.getMessage()));
+	}
+	
+	@Test
+	void transpositionProcess5() throws Exception {
+		Exception exception = assertThrows(Exception.class, () -> {
+			transposition.process("[[-3,10]]", "-1");
+	    });
+		
+		assertTrue("Value is '[-3,9]'.".equals(exception.getMessage()));
+	}
+	
+	@Test
+	void transpositionProcess6() throws Exception {
+		Exception exception = assertThrows(Exception.class, () -> {
+			transposition.process("[[5,1]]", "1");
+	    });
+		
+		assertTrue("Value is '[5,2]'.".equals(exception.getMessage()));
 	}
 }
