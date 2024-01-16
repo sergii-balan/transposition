@@ -15,15 +15,16 @@ public class TranspositionImpl implements Transposition {
 	private static final String EXPN_TEMPLATE = "Note is 'Note(octave=%d, number=%d)'.";
 	
 	private static final byte[][] EMPTY_BARR = new byte[0][0];
-	private static final int ARG_MIN_LEN = 7; //[[1,2]]
+	private static final int ARG_MIN_LEN = "[[1,2]]".length();
 	private static final String BR_S = "[";
-	private static final String BR_SS = BR_S + BR_S;
 	private static final String BR_E = "]";
+	private static final String BR_SS = BR_S + BR_S;
 	private static final String BR_EE = BR_E + BR_E;
 	
 	private static final byte[] L_OCTAVE = new byte[] {-3, 10};
 	private static final byte[] H_OCTAVE = new byte[] { 5,  1};
-	private static final byte D_BASE = 12;
+	private static final byte MIN_NOTE = 1;
+	private static final byte MAX_NOTE = 12;
 	
 	@Override
 	public byte[][] process(@NonNull String data, @NonNull String transposition) throws Exception {
@@ -73,7 +74,7 @@ public class TranspositionImpl implements Transposition {
 			throw new Exception(EXPN_TEMPLATE.formatted(value[0], value[1]));
 		}
 		
-		if (value[1] < 1 || value[1] > D_BASE) {
+		if (value[1] < MIN_NOTE || value[1] > MAX_NOTE) {
 			throw new Exception(String.format("Note value is out of range: '%d'.", value[1]));
 		}
 	}
